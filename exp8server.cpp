@@ -1,46 +1,36 @@
-#include "stdio.h" 
-#include "stdlib.h" 
-#include "string.h" 
-//headers for socket and related functions 
 #include <sys/types.h> 
 #include <sys/socket.h> 
-#include <sys/stat.h> 
-//for including structures which will store information needed 
+#include <stdio.h> 
+#include <stdlib.h> 
+#include <netdb.h> 
 #include <netinet/in.h> 
+#include <string.h> 
+#include <sys/stat.h> 
+#include <arpa/inet.h> 
 #include <unistd.h> 
-//for gethostbyname 
-#include "netdb.h" 
-#include "arpa/inet.h" 
-// defining constants 
-#define PORT 6969 
-#define BACKLOG 5 
+#define MAX 1000 
 int main() 
 { 
+ int serverDescriptor = socket(AF_INET, SOCK_DGRAM, 0); 
  int size; 
- int socketDescriptor = socket(AF_INET, SOCK_STREAM, 0); 
- struct sockaddr_in serverAddress, clientAddress; 
- socklen_t clientLength; 
- struct stat statVariable; 
- char buffer[100], file[1000]; 
- FILE *filePointer; 
+ char buffer[MAX], message[] = "Command Successfully executed !"; 
+ struct sockaddr_in clientAddress, serverAddress; 
+ socklen_t clientLength = sizeof(clientAddress); 
  bzero(&serverAddress, sizeof(serverAddress)); 
  serverAddress.sin_family = AF_INET; 
  serverAddress.sin_addr.s_addr = htonl(INADDR_ANY); 
- serverAddress.sin_port = htons(PORT); 
- bind(socketDescriptor, (struct sockaddr *)&serverAddress, sizeof(serverAddress)); 
- listen(socketDescriptor,BACKLOG); 
-printf("%s\n","Server is running ..."); 
- int clientDescriptor = accept(socketDescriptor,(struct 
-sockaddr*)&clientAddress,&clientLength); 
- while(1){ 
- bzero(buffer,sizeof(buffer)); 
-bzero(file,sizeof(file)); 
- recv(clientDescriptor,buffer,sizeof(buffer),0); 
- filePointer = fopen(buffer,"r"); 
- stat(buffer,&statVariable); 
- size=statVariable.st_size; 
- fread(file,sizeof(file),1,filePointer); 
- send(clientDescriptor,file,sizeof(file),0); 
+ serverAddress.sin_port = htons(8079); 
+ bind(serverDescriptor, (struct sockaddr *)&serverAddress, sizeof(serverAddress)); 
+ while (1) 
+ { 
+ bzero(buffer, sizeof(buffer)); 
+recvfrom(serverDescriptor, buffer, sizeof(buffer), 0, (struct sockaddr *)&clientAddress, 
+&clientLength); 
+ system(buffer); 
+ printf("Command Executed ... %s ", buffer); 
+sendto(serverDescriptor, message, sizeof(message), 0, (struct sockaddr *)&clientAddress, 
+clientLength); 
  } 
+ close(serverDescriptor); 
  return 0; 
 }
