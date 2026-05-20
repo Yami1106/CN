@@ -1,42 +1,30 @@
 <div align="center">
 
-<pre>
-╔════════════╗
-║     💻  CN  💻     ║
-╚════════════╝
-</pre>
+# Computer Networks
 
-## Project Repository
+[![C++](https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=cplusplus&logoColor=white)](https://isocpp.org)
 
-
+*Computer Networks coursework — socket programming, protocol implementations, and network simulations.*
 
 </div>
 
 ---
 
-## About
+## Topics
 
-A Python project repository. See the source code for details.
-
----
-
-## Features
-
-- See source code for details
+- Socket programming (TCP / UDP)
+- Client-server models
+- Network protocol simulation
+- OSI layer concepts in code
 
 ---
 
-## Tech Stack
+## Tech stack
 
-_See source_
-
----
-
-## Author
-
-**Ashish (Yami1106)**
-[GitHub](https://github.com/Yami1106) · [Portfolio](https://yamiportfolio.netlify.app/)
+`C++` · `POSIX Sockets` · `Linux`
 
 ---
 
-*Generated with [Automate_contribution](https://github.com/Yami1106/Automate_contribution)*
+<div align="center">
+<a href="https://github.com/Yami1106">Ashish Sukumar</a>
+</div>
